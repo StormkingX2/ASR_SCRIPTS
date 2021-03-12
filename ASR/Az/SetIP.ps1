@@ -1,9 +1,16 @@
-﻿Connect-AzAccount
+﻿<#
+  This is a script used to set the IP the VM replicated will use on azure
+  It will work with the different types of replication (VMware/Azure VM/Hyper V)
+  It also features as GUI to pick the date and time so as to simplify the usage of it
+  It is using the Az Module
+#>
 
-while($vault -eq $null){
+Connect-AzAccount
+
+while($null -eq $vault){
 $name = Read-Host 'What is your Vault Name?'
 $vault = Get-AzRecoveryServicesVault -Name $name
-if($vault -eq $null){Write-Host "Not a Vaild Vault"}
+if($null -eq $vault){Write-Host "Not a Vaild Vault"}
 }
 $dnaname = "ASR-Script"
 $cert = New-SelfSignedCertificate -certstorelocation cert:\localmachine\my -dnsname $dnaname
@@ -61,7 +68,7 @@ Try
     $containerSelection= $container
     }
 
-$item = Get-AzRecoveryServicesAsrReplicationProtectedItem -ProtectionContainer $container
+$item = Get-AzRecoveryServicesAsrReplicationProtectedItem -ProtectionContainer $containerSelection
 }Catch{Write-Host "This Vault has no CS associated"}
 
 Set-AzRecoveryServicesAsrReplicationProtectedItem -ReplicationProtectedItem $item -RecoveryNicStaticIPAddress $IP -RecoveryNetworkId $item.NicDetailsList.RecoveryVMNetworkId -RecoveryNicSubnetName $item.NicDetailsList.RecoveryVMSubnetName -PrimaryNic $item.NicDetailsList.NicId

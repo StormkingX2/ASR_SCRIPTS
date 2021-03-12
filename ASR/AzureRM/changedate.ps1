@@ -1,4 +1,10 @@
-﻿Login-AzureRmAccount
+﻿<#
+  This is a script used to change the date of when the backup is run for the policy of affecting azureVM
+  It also features as GUI to pick the date and time so as to simplify the usage of it
+  It is using the azurerm module
+#>
+
+Login-AzureRmAccount
 
 $vaults = Get-AzureRmRecoveryServicesVault
 

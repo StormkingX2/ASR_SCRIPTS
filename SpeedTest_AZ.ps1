@@ -1,4 +1,10 @@
-﻿$path = “$env:temp\testfile.txt”
+﻿<#
+  This is a powershell scrip to check the speed from the computer to azure.
+  It requiers a storage account so we can send a file of 100MB to it and then delete it and take note of the time that it took to transfer so we can calculate the speed in MB/s
+  It is using the AZ module
+#>
+
+$path = “$env:temp\testfile.txt”
 $file = [io.file]::Create($path)
 $file.SetLength(100mb)
 $file.Close()

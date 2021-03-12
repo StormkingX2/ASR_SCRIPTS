@@ -1,9 +1,15 @@
-﻿Connect-AzAccount
+﻿<#
+  This is a script used to remove the VM from replication from the different types of replication (VMware/Azure VM/Hyper V)
+  It also features as GUI to pick the date and time so as to simplify the usage of it
+  It is using the Az Module
+#>
 
-while($vault -eq $null){
+Connect-AzAccount
+
+while($null -eq $vault){
 $name = Read-Host 'What is your Vault Name?'
 $vault = Get-AzRecoveryServicesVault -Name $name
-if($vault -eq $null){Write-Host "Not a Vaild Vault"}
+if($null -eq $vault){Write-Host "Not a Vaild Vault"}
 }
 $dnaname = "ASR-Script"
 $cert = New-SelfSignedCertificate -certstorelocation cert:\localmachine\my -dnsname $dnaname
@@ -27,7 +33,7 @@ $fabric = Get-AzRecoveryServicesAsrFabric
 TRY{
 
  for ($i=1;$i -le $fabric.count; $i++){
-    if($fabric[$i-1].FabricType -eq $null){$fabric[$i-1].FabricType = "Azure"}
+    if($null -eq $fabric[$i-1].FabricType){$fabric[$i-1].FabricType = "Azure"}
   }
 
 if($fabric.GetType().Name -eq "Object[]"){

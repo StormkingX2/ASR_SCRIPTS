@@ -1,4 +1,10 @@
-﻿Login-AzureRmAccount
+﻿<#
+  This is a script used to remove the replication policy from the different types of replication (VMware/Azure VM/Hyper V)
+  It also features as GUI to pick the date and time so as to simplify the usage of it
+  It is using the AzureRM Module in case it need to be used in a machine that doesnt have the AZ module
+#>
+
+Login-AzureRmAccount
 
 $name = Read-Host 'What is your Vault Name?'
 $vault = Get-AzureRmRecoveryServicesVault -Name $name
@@ -10,7 +16,7 @@ Remove-Item -Path $cred.FilePath
 TRY{
 
  for ($i=1;$i -le $fabric.count; $i++){
-    if($fabric[$i-1].FabricType -eq $null){$fabric[$i-1].FabricType = "Azure"}
+    if($null -eq $fabric[$i-1].FabricType){$fabric[$i-1].FabricType = "Azure"}
   }
 
 if($fabric.GetType().Name -eq "Object[]"){
@@ -55,5 +61,5 @@ for ($i=1;$i -le $item.count; $i++){
  
 $mappingSelection
 
-#Remove-AzureRmRecoveryServicesAsrProtectionContainerMapping -InputObject $mappingSelection -Force
+Remove-AzureRmRecoveryServicesAsrProtectionContainerMapping -InputObject $mappingSelection -Force
 }Catch{Write-Host "This CS has no Replication Policies associated"}

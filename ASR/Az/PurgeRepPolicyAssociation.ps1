@@ -1,9 +1,14 @@
+<#
+  This is a script used to remove the replication policy from the different types of replication (VMware/Azure VM/Hyper V)
+  It also features as GUI to pick the date and time so as to simplify the usage of it
+  It is using the Az Module
+#>
 Connect-AzAccount
 
-while($vault -eq $null){
+while($null -eq $vault){
 $name = Read-Host 'What is your Vault Name?'
 $vault = Get-AzRecoveryServicesVault -Name $name
-if($vault -eq $null){Write-Host "Not a Vaild Vault"}
+if($null -eq $vault){Write-Host "Not a Vaild Vault"}
 }
 $dnaname = "ASR-Script"
 $cert = New-SelfSignedCertificate -certstorelocation cert:\localmachine\my -dnsname $dnaname
@@ -27,7 +32,7 @@ $fabric = Get-AzRecoveryServicesAsrFabric
 TRY{
 
  for ($i=1;$i -le $fabric.count; $i++){
-    if($fabric[$i-1].FabricType -eq $null){$fabric[$i-1].FabricType = "Azure"}
+    if($null -eq $fabric[$i-1].FabricType){$fabric[$i-1].FabricType = "Azure"}
   }
 
 if($fabric.GetType().Name -eq "Object[]"){
@@ -72,5 +77,5 @@ for ($i=1;$i -le $item.count; $i++){
  
 $mappingSelection
 
-#Remove-AzureRmRecoveryServicesAsrProtectionContainerMapping -InputObject $mappingSelection -Force
+Remove-AzureRmRecoveryServicesAsrProtectionContainerMapping -InputObject $mappingSelection -Force
 }Catch{Write-Host "This CS has no Replication Policies associated"}

@@ -1,3 +1,8 @@
+<#
+        This is demo code to setup the Azure site recovery configuration server unatended, it was used by me so i can set up a test lab while doing tasks.
+        As such it uses a non secure password for the MySQL database and should not be used in production
+#>
+
 md C:\ASRAuto
 Set-Location -Path C:\ASRAuto
 $uri= "https://aka.ms/unifiedinstaller_ne"

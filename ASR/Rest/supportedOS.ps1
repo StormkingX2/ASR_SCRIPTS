@@ -1,4 +1,8 @@
-﻿# Variables
+﻿<#
+    Demo code use to test the azure site recovery api to get the supported OSes.
+#>
+
+# Variables
 $SubscriptionId = "" # Enter Subscription Id.
 $ResourceGroups= ""
 $vault = ""

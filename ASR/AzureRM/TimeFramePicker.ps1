@@ -1,4 +1,6 @@
-﻿Add-Type -AssemblyName System.Windows.Forms
+﻿<#This is demo code to create a ui to select a time and date that was used in the file AzureRM\changedate.ps1#>
+
+Add-Type -AssemblyName System.Windows.Forms
 
 # Main Form
 $mainForm = New-Object System.Windows.Forms.Form

@@ -1,4 +1,9 @@
 #!/bin/bash
+<<COMMENTS
+        This is demo code to setup the Azure site recovery client on linux and it will also select the correct linux distro since asr uses different client depending of the distro used, it was used by me so i can set up a test lab while doing tasks.
+        It does expect the auto.ps1 was run on the Configuration sever as that script will create two smb shares used by this script to get the installer and the connection.passphrase
+COMMENTS
+
 
 read -p "Enter CS IP: " ipCs 
 read -p "Enter windows username: " user

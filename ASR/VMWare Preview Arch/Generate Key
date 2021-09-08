@@ -1,0 +1,36 @@
+<#
+ 
+This Script generates the new ASR preview key in case you only have one vault and subscription will improve it in the next few days to be able to select which vault and subscription you want to target
+ 
+The key has the following components:
+ 
+    Type of key which in this case will be PUBLIC
+    TennantID
+    REST API URL, which is following the standard used by Microsoft with the following components:
+        The word subscription follow by the subscription ID
+        The word resource group, followed by the group name,
+        The word provider followed by the Provider module, in this case and for all recoveryServices operations, Microsoft.RecoveryServices 
+        The word vaults followed by the name of the vault,
+    The Display Name of the subscripion
+    The location of the vault
+  After running it the key will be on your clipboard so you can paste it into the web app
+
+  Do note the version here needs you to know the name of the vault and need to have been created before, also it expecting only one subscription
+#>
+ 
+Connect-AzAccount
+
+while($null -eq $vault){
+    $name = Read-Host 'What is your Vault Name?'
+    $vault = Get-AzRecoveryServicesVault -Name $name
+    if($null -eq $vault){Write-Host "Not a Vaild Vault"}
+    }
+ 
+$tennantID = (Get-AzSubscription).TenantId
+$restUrl = $vault.ID
+$subscriptionName = $vault.Name
+$vaultLocation = $vault.Location
+  
+$asrKey= "PUBLIC;"+$tennantID+";"+$restUrl+";"+$subscriptionName+";"+$vaultLocation 
+
+$asrKey | Set-Clipboard

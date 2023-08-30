@@ -1,0 +1,3 @@
+﻿#Script to get every update done by each machine and output a CSV with the name of the machine the title of the update and the date of installation
+
+Invoke-Command -ComputerName (Get-ADComputer -Filter *).Name {(New-Object -ComObject 'Microsoft.Update.Session').QueryHistory("",1,100)} -ErrorAction SilentlyContinue | Select-Object PSComputername, Title, Date | ConvertTo-Csv -NoTypeInformation | % {$_.Replace('"','')} | Out-File 'C:\tempCSV\Update_Named.csv'
